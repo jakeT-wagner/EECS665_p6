@@ -1,0 +1,23 @@
+int b;
+bool e;
+bool f;
+int g;
+int fn(int a){
+    int d;
+    bool q;
+    d = 10 + 1;
+    a = 12-3;
+    b = 8*4;
+    d = 12/3;
+    e = 6 == 6;
+    f = 7 != 8;
+    e = true or true;
+    f = false and false;
+    e = 5 < 6;
+    f = 6 > 7;
+    e = 5 <= 6;
+    f = 6 <= 7;
+    d = -5;
+    e = !(true);
+}
+int c;

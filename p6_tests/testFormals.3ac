@@ -1,0 +1,17 @@
+[BEGIN GLOBALS]
+b
+c
+[END GLOBALS]
+[BEGIN fn LOCALS]
+a (formal arg of 8)
+d (local var of 8 bytes)
+varTmp0 (tmp var of 8 bytes)
+[END fn LOCALS]
+fun_fn:     enter fn
+            getarg 1 [a]
+            [varTmp0] := 10 ADD64 1
+            [d] := [varTmp0]
+            [a] := 12
+            [b] := 8
+lbl_0:      leave fn
+
