@@ -1,0 +1,79 @@
+[BEGIN GLOBALS]
+[END GLOBALS]
+[BEGIN fn_b LOCALS]
+b (formal arg of 8)
+[END fn_b LOCALS]
+fun_fn_b:   enter fn_b
+            getarg 1 [b]
+lbl_0:      leave fn_b
+[BEGIN fn_i LOCALS]
+tmp0 (tmp var of 8 bytes)
+[END fn_i LOCALS]
+fun_fn_i:   enter fn_i
+            [tmp0] := 2 ADD64 2
+            setret [tmp0]
+            goto lbl_1
+lbl_1:      leave fn_i
+[BEGIN fn_s LOCALS]
+s (local var of 8 bytes)
+[addrTmp0] (tmp loc of 8 bytes)
+[addrTmp1] (tmp loc of 8 bytes)
+[END fn_s LOCALS]
+fun_fn_s:   enter fn_s
+            [addrTmp0] := [s]
+            RECEIVE [[addrTmp0]]
+            [addrTmp1] := [s]
+            setret [[addrTmp1]]
+            goto lbl_2
+lbl_2:      leave fn_s
+[BEGIN v LOCALS]
+[END v LOCALS]
+fun_v:      enter v
+lbl_3:      leave v
+[BEGIN main LOCALS]
+a (local var of 8 bytes)
+b (local var of 8 bytes)
+p (local var of 8 bytes)
+tmp0 (tmp var of 8 bytes)
+tmp1 (tmp var of 8 bytes)
+tmp2 (tmp var of 8 bytes)
+tmp3 (tmp var of 8 bytes)
+tmp4 (tmp var of 8 bytes)
+tmp5 (tmp var of 8 bytes)
+tmp6 (tmp var of 8 bytes)
+tmp7 (tmp var of 8 bytes)
+tmp8 (tmp var of 8 bytes)
+tmp9 (tmp var of 8 bytes)
+tmp10 (tmp var of 8 bytes)
+tmp11 (tmp var of 8 bytes)
+tmp12 (tmp var of 8 bytes)
+tmp14 (tmp var of 8 bytes)
+[addrTmp13] (tmp loc of 8 bytes)
+[END main LOCALS]
+main:       enter main
+            call v
+            call fn_i
+            call fn_i
+            getret [tmp1]
+            [a] := [tmp1]
+            call fn_i
+            getret [tmp2]
+            [tmp3] := [tmp2] ADD64 [a]
+            [a] := [tmp3]
+            call fn_s
+            getret [tmp4]
+            [tmp5] := [tmp4]
+            [tmp6] := 3
+            call fn_i
+            getret [tmp7]
+            call fn_s
+            getret [tmp8]
+            [tmp9] := [tmp8]
+            [tmp10] := [tmp7] DIV64 [tmp9]
+            [tmp11] := [tmp6] MULT64 [tmp10]
+            [tmp12] := [tmp5] SUB64 [tmp11]
+            [addrTmp13] := [p]
+            [tmp14] := [tmp12] ADD64 [[addrTmp13]]
+            [b] := [tmp14]
+            REPORT [a]
+lbl_4:      leave main

@@ -1,0 +1,17 @@
+int main() {
+    ptr int a; 
+    @a = 3;
+
+    ptr short b;
+    @b = 2S;
+
+    @a = 2S + 2;
+
+    @a = @b + 2;
+
+    @a = @b + @b;
+
+    @a = 2 + @b;
+
+    write @a;
+}

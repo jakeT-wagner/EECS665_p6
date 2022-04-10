@@ -1,0 +1,62 @@
+[BEGIN GLOBALS]
+[END GLOBALS]
+[BEGIN while_test LOCALS]
+b (local var of 8 bytes)
+tmp0 (tmp var of 8 bytes)
+[END while_test LOCALS]
+fun_while_test: enter while_test
+lbl_1:      nop
+            IFZ [b] GOTO lbl_2
+            [b] := 0
+lbl_3:      nop
+            [tmp0] := NOT64 [b]
+            IFZ [tmp0] GOTO lbl_4
+            [b] := 1
+            goto lbl_3
+lbl_4:      nop
+            goto lbl_1
+lbl_2:      nop
+lbl_0:      leave while_test
+[BEGIN if_test LOCALS]
+b (local var of 8 bytes)
+tmp0 (tmp var of 8 bytes)
+tmp1 (tmp var of 8 bytes)
+tmp2 (tmp var of 8 bytes)
+[END if_test LOCALS]
+fun_if_test: enter if_test
+            [tmp0] := 1 AND64 0
+            [tmp1] := [b] OR64 [tmp0]
+            IFZ [tmp1] GOTO lbl_6
+            [b] := 0
+            [tmp2] := NOT64 [b]
+            IFZ [tmp2] GOTO lbl_7
+            [b] := 1
+lbl_7:      nop
+lbl_6:      nop
+lbl_5:      leave if_test
+[BEGIN if_else_test LOCALS]
+a (local var of 8 bytes)
+tmp0 (tmp var of 8 bytes)
+tmp1 (tmp var of 8 bytes)
+tmp2 (tmp var of 8 bytes)
+tmp3 (tmp var of 8 bytes)
+[END if_else_test LOCALS]
+fun_if_else_test: enter if_else_test
+            [tmp0] := [a] GT64 3
+            [tmp1] := 2 MULT64 10
+            [tmp2] := [a] LTE64 [tmp1]
+            [tmp3] := [tmp0] OR64 [tmp2]
+            IFZ [tmp3] GOTO lbl_9
+            [a] := 0
+            goto lbl_10
+lbl_9:      nop
+            [a] := 1
+lbl_10:     nop
+lbl_8:      leave if_else_test
+[BEGIN main LOCALS]
+[END main LOCALS]
+main:       enter main
+            call while_test
+            call if_test
+            call if_else_test
+lbl_11:     leave main

@@ -20,8 +20,6 @@ void FnDeclNode::to3AC(IRProgram * prog){
 	for (auto body : *myBody) {
 		body->to3AC(proc);
 	}
-	
-	//TODO(Implement me)
 }
 
 void FnDeclNode::to3AC(Procedure * proc){ //proc = local scope?
@@ -79,29 +77,58 @@ Opd * FalseNode::flatten(Procedure * proc){
 
 Opd * AssignExpNode::flatten(Procedure * proc){
 	//get operands
-	Opd * dst = myDst->flatten(proc);
 	Opd * src = mySrc->flatten(proc);
+	Opd * dst = myDst->flatten(proc);
 	assert(dst != nullptr);
 	assert(src != nullptr);
 
 	//create quad
 	AssignQuad * quad = new AssignQuad(dst, src);
 	proc->addQuad(quad);
-	return nullptr;//?? what to return??
+	return dst;
+	//return nullptr;//?? what to return??
 }
 
 Opd * LValNode::flatten(Procedure * proc){
-	TODO(Implement me)
+	throw new InternalError("Inside LVal");
 }
 
 Opd * CallExpNode::flatten(Procedure * proc){
-	TODO(Implement me)
+	for (auto arg : *myArgs) {
+		arg -> flatten(proc);
+	}
+
+	CallQuad * quad = new CallQuad(myID -> getSymbol());
+	proc -> addQuad(quad);
+	if (getRetType() -> isVoid()) {
+		return myID -> flatten(proc);
+	}
+
+	AuxOpd * tmp = proc -> makeTmp(8);
+	GetRetQuad* grQuad = new GetRetQuad(tmp);
+	proc -> addQuad(grQuad);
+	return tmp;
+}
+
+Opd* CallExpNode::flattenAsStmt(Procedure * proc)
+{
+	for (auto arg : *myArgs) {
+		arg -> flatten(proc);
+	}
+
+	if (!(getRetType() -> asFn() -> isVoid())) {
+		AuxOpd * tmp = proc -> makeTmp(8);
+	}
+
+	CallQuad * quad = new CallQuad(myID -> getSymbol());
+	proc -> addQuad(quad);
+	return myID -> flatten(proc);
 }
 
 Opd * NegNode::flatten(Procedure * proc){
 	//get operands
-	AuxOpd * tmp = proc->makeTmp(8); //8?
 	Opd * src = myExp->flatten(proc);
+	AuxOpd * tmp = proc->makeTmp(8); //8?
 	assert(tmp != nullptr);
 
 	//create UnaryOpQuad and add to function body
@@ -113,8 +140,8 @@ Opd * NegNode::flatten(Procedure * proc){
 
 Opd * NotNode::flatten(Procedure * proc){
 	//get operands
-	AuxOpd * tmp = proc->makeTmp(8); //8?
 	Opd * src = myExp->flatten(proc);
+	AuxOpd * tmp = proc->makeTmp(8); //8?
 	assert(tmp != nullptr);
 
 	//create UnaryOpQuad and add to function body
@@ -126,13 +153,12 @@ Opd * NotNode::flatten(Procedure * proc){
 
 Opd * PlusNode::flatten(Procedure * proc){
 	//get operands
-	AuxOpd * tmp = proc->makeTmp(8); //8?
 	Opd * src1 = myExp1->flatten(proc);
 	Opd * src2 = myExp2->flatten(proc);
+	AuxOpd * tmp = proc->makeTmp(8); //8?
 	assert(tmp != nullptr);
 	assert(src1 != nullptr);
 	assert(src2 != nullptr);
-
 	//create BinOpQuad and add to function body
 	BinOp plus = ADD64;
 	BinOpQuad * quad = new BinOpQuad(tmp, plus, src1, src2);
@@ -142,9 +168,9 @@ Opd * PlusNode::flatten(Procedure * proc){
 //Hello everyone... I am a computer
 Opd * MinusNode::flatten(Procedure * proc){
 	//get operands
-	AuxOpd * tmp = proc->makeTmp(8); //8?
 	Opd * src1 = myExp1->flatten(proc);
 	Opd * src2 = myExp2->flatten(proc);
+	AuxOpd * tmp = proc->makeTmp(8); //8?
 	assert(tmp != nullptr);
 	assert(src1 != nullptr);
 	assert(src2 != nullptr);
@@ -158,9 +184,9 @@ Opd * MinusNode::flatten(Procedure * proc){
 
 Opd * TimesNode::flatten(Procedure * proc){
 	//get operands
-	AuxOpd * tmp = proc->makeTmp(8); //8?
 	Opd * src1 = myExp1->flatten(proc);
 	Opd * src2 = myExp2->flatten(proc);
+	AuxOpd * tmp = proc->makeTmp(8); //8?
 	assert(tmp != nullptr);
 	assert(src1 != nullptr);
 	assert(src2 != nullptr);
@@ -174,9 +200,9 @@ Opd * TimesNode::flatten(Procedure * proc){
 
 Opd * DivideNode::flatten(Procedure * proc){
 	//get operands
-	AuxOpd * tmp = proc->makeTmp(8); //8?
 	Opd * src1 = myExp1->flatten(proc);
 	Opd * src2 = myExp2->flatten(proc);
+	AuxOpd * tmp = proc->makeTmp(8); //8?
 	assert(tmp != nullptr);
 	assert(src1 != nullptr);
 	assert(src2 != nullptr);
@@ -190,9 +216,9 @@ Opd * DivideNode::flatten(Procedure * proc){
 
 Opd * AndNode::flatten(Procedure * proc){
 	//get operands
-	AuxOpd * tmp = proc->makeTmp(8); //8?
 	Opd * src1 = myExp1->flatten(proc);
 	Opd * src2 = myExp2->flatten(proc);
+	AuxOpd * tmp = proc->makeTmp(8); //8?
 	assert(tmp != nullptr);
 	assert(src1 != nullptr);
 	assert(src2 != nullptr);
@@ -206,9 +232,9 @@ Opd * AndNode::flatten(Procedure * proc){
 
 Opd * OrNode::flatten(Procedure * proc){
 	//get operands
-	AuxOpd * tmp = proc->makeTmp(8); //8?
 	Opd * src1 = myExp1->flatten(proc);
 	Opd * src2 = myExp2->flatten(proc);
+	AuxOpd * tmp = proc->makeTmp(8); //8?
 	assert(tmp != nullptr);
 	assert(src1 != nullptr);
 	assert(src2 != nullptr);
@@ -222,9 +248,9 @@ Opd * OrNode::flatten(Procedure * proc){
 
 Opd * EqualsNode::flatten(Procedure * proc){
 	//get operands
-	AuxOpd * tmp = proc->makeTmp(8); //8?
 	Opd * src1 = myExp1->flatten(proc);
 	Opd * src2 = myExp2->flatten(proc);
+	AuxOpd * tmp = proc->makeTmp(8); //8?
 	assert(tmp != nullptr);
 	assert(src1 != nullptr);
 	assert(src2 != nullptr);
@@ -238,9 +264,9 @@ Opd * EqualsNode::flatten(Procedure * proc){
 
 Opd * NotEqualsNode::flatten(Procedure * proc){
 	//get operands
-	AuxOpd * tmp = proc->makeTmp(8); //8?
 	Opd * src1 = myExp1->flatten(proc);
 	Opd * src2 = myExp2->flatten(proc);
+	AuxOpd * tmp = proc->makeTmp(8); //8?
 	assert(tmp != nullptr);
 	assert(src1 != nullptr);
 	assert(src2 != nullptr);
@@ -254,9 +280,9 @@ Opd * NotEqualsNode::flatten(Procedure * proc){
 
 Opd * LessNode::flatten(Procedure * proc){
 	//get operands
-	AuxOpd * tmp = proc->makeTmp(8); //8?
 	Opd * src1 = myExp1->flatten(proc);
 	Opd * src2 = myExp2->flatten(proc);
+	AuxOpd * tmp = proc->makeTmp(8); //8?
 	assert(tmp != nullptr);
 	assert(src1 != nullptr);
 	assert(src2 != nullptr);
@@ -270,9 +296,9 @@ Opd * LessNode::flatten(Procedure * proc){
 
 Opd * GreaterNode::flatten(Procedure * proc){
 	//get operands
-	AuxOpd * tmp = proc->makeTmp(8); //8?
 	Opd * src1 = myExp1->flatten(proc);
 	Opd * src2 = myExp2->flatten(proc);
+	AuxOpd * tmp = proc->makeTmp(8); //8?
 	assert(tmp != nullptr);
 	assert(src1 != nullptr);
 	assert(src2 != nullptr);
@@ -286,9 +312,9 @@ Opd * GreaterNode::flatten(Procedure * proc){
 
 Opd * LessEqNode::flatten(Procedure * proc){
 	//get operands
-	AuxOpd * tmp = proc->makeTmp(8); //8?
 	Opd * src1 = myExp1->flatten(proc);
 	Opd * src2 = myExp2->flatten(proc);
+	AuxOpd * tmp = proc->makeTmp(8); //8?
 	assert(tmp != nullptr);
 	assert(src1 != nullptr);
 	assert(src2 != nullptr);
@@ -302,9 +328,9 @@ Opd * LessEqNode::flatten(Procedure * proc){
 
 Opd * GreaterEqNode::flatten(Procedure * proc){
 	//get operands
-	AuxOpd * tmp = proc->makeTmp(8); //8?
 	Opd * src1 = myExp1->flatten(proc);
 	Opd * src2 = myExp2->flatten(proc);
+	AuxOpd * tmp = proc->makeTmp(8); //8?
 	assert(tmp != nullptr);
 	assert(src1 != nullptr);
 	assert(src2 != nullptr);
@@ -317,15 +343,27 @@ Opd * GreaterEqNode::flatten(Procedure * proc){
 }
 
 Opd * ShortToIntNode::flatten(Procedure * proc){
-	TODO(Implement me)
+	Opd* src = myExp -> flatten(proc);
+	AuxOpd* tmp = proc->makeTmp(8);
+	AssignQuad * quad = new AssignQuad(tmp, src);
+	proc -> addQuad(quad);
+	return tmp;
 }
 
 Opd * RefNode::flatten(Procedure * proc){
-	TODO(Implement me)
+	Opd* id = myID -> flatten(proc);
+	AuxOpd * tmp = proc -> makeTmp(8);
+	LocQuad * quad = new LocQuad(id, tmp, true, false);
+	proc -> addQuad(quad);
+	return tmp;
 }
 
 Opd * DerefNode::flatten(Procedure * proc){
-	TODO(Implement me)
+	Opd * id = myID -> flatten(proc);
+	AddrOpd * addrTemp = proc -> makeAddrOpd(8);
+	LocQuad * quad = new LocQuad(id, addrTemp, false, true);
+	proc -> addQuad(quad);
+	return addrTemp;
 }
 
 void AssignStmtNode::to3AC(Procedure * proc){
@@ -333,39 +371,110 @@ void AssignStmtNode::to3AC(Procedure * proc){
 }
 
 void PostIncStmtNode::to3AC(Procedure * proc){
-	TODO(Implement me)
+	LitOpd* lit = new LitOpd("1", 8);
+	Opd * src = myLVal -> flatten(proc);
+	BinOp op = ADD64;
+	BinOpQuad * quad = new BinOpQuad(src, op, src, lit);
+	proc -> addQuad(quad);
 }
 
 void PostDecStmtNode::to3AC(Procedure * proc){
-	TODO(Implement me)
+	LitOpd* lit = new LitOpd("1", 8);
+	Opd * src = myLVal -> flatten(proc);
+	BinOp op = SUB64;
+	BinOpQuad * quad = new BinOpQuad(src, op, src, lit);
+	proc -> addQuad(quad);
 }
 
 void ReadStmtNode::to3AC(Procedure * proc){
-	TODO(Implement me)
+	Opd * dst = myDst -> flatten(proc);
+	const DataType * t = proc -> getProg() -> nodeType(myDst);
+	ReceiveQuad * rQuad = new ReceiveQuad(dst, t);
+	proc -> addQuad(rQuad);
 }
 
 void WriteStmtNode::to3AC(Procedure * proc){
-	TODO(Implement me)
+	Opd * src = mySrc -> flatten(proc);
+	const DataType * t = proc -> getProg() -> nodeType(mySrc);
+	ReportQuad * quad = new ReportQuad(src, t);
+	proc -> addQuad(quad);
 }
 
 void IfStmtNode::to3AC(Procedure * proc){
-	TODO(Implement me)
+	Opd* cond = myCond -> flatten(proc);
+	Label * skip = proc -> makeLabel();
+	IfzQuad * ifzQuad = new IfzQuad(cond, skip);
+	proc -> addQuad(ifzQuad);
+
+	for (auto stmt : *myBody) {
+		stmt -> to3AC(proc);
+	}
+
+	NopQuad * nop = new NopQuad();
+	nop -> addLabel(skip);
+	proc -> addQuad(nop);
 }
 
 void IfElseStmtNode::to3AC(Procedure * proc){
-	TODO(Implement me)
+	Opd* cond = myCond -> flatten(proc);
+	Label * skip = proc -> makeLabel();
+	Label * end = proc -> makeLabel();
+	IfzQuad * ifzQuad = new IfzQuad(cond, skip);
+	proc -> addQuad(ifzQuad);
+
+	for (auto stmt : *myBodyTrue) {
+		stmt -> to3AC(proc);
+	}
+
+	GotoQuad * gotoQuad = new GotoQuad(end);
+	proc -> addQuad(gotoQuad);
+	
+	NopQuad * nop = new NopQuad();
+	nop -> addLabel(skip);
+	proc -> addQuad(nop);
+
+	for (auto stmt : *myBodyFalse) {
+		stmt -> to3AC(proc);
+	}
+
+	NopQuad * nop2 = new NopQuad();
+	nop2 -> addLabel(end);
+	proc -> addQuad(nop2);
 }
 
 void WhileStmtNode::to3AC(Procedure * proc){
-	TODO(Implement me)
+	Label * start = proc -> makeLabel();
+	Label * end = proc -> makeLabel();
+	NopQuad * nop1 = new NopQuad();
+
+	nop1 -> addLabel(start);
+	proc -> addQuad(nop1);
+
+	Opd* cond = myCond -> flatten(proc);
+	IfzQuad * ifzQuad = new IfzQuad(cond, end);
+	proc -> addQuad(ifzQuad);
+
+	for (auto stmt : *myBody) {
+		stmt -> to3AC(proc);
+	}
+
+	GotoQuad * gotoQuad = new GotoQuad(start);
+	NopQuad * nop2 = new NopQuad();
+	proc -> addQuad(gotoQuad);
+	nop2 -> addLabel(end);
+	proc -> addQuad(nop2);
 }
 
 void CallStmtNode::to3AC(Procedure * proc){
-	TODO(Implement me)
+	myCallExp -> flattenAsStmt(proc);
 }
 
 void ReturnStmtNode::to3AC(Procedure * proc){
-	TODO(Implement me)
+	Opd * src = myExp -> flatten(proc);
+	SetRetQuad * srQuad = new SetRetQuad(src);
+	GotoQuad * gotoQuad = new GotoQuad(proc -> getLeaveLabel());
+	proc -> addQuad(srQuad);
+	proc -> addQuad(gotoQuad);
 }
 
 void VarDeclNode::to3AC(Procedure * proc){

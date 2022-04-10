@@ -88,6 +88,7 @@ public:
 	void unparse(std::ostream& out, int indent) override;
 	void attachSymbol(SemSymbol * symbolIn);
 	SemSymbol * getSymbol() const { return mySymbol; }
+	const DataType * getType() { return mySymbol -> getDataType(); }
 	bool nameAnalysis(SymbolTable * symTab) override;
 	virtual void typeAnalysis(TypeAnalysis *) override;
 	virtual Opd * flatten(Procedure * proc) override;
@@ -317,9 +318,10 @@ public:
 	virtual std::string nodeKind() override { return "CallExp"; }
 	bool nameAnalysis(SymbolTable * symTab) override;
 	void typeAnalysis(TypeAnalysis *) override;
-	DataType * getRetType();
+	const DataType * getRetType() { return myID -> getType(); }
 
 	virtual Opd * flatten(Procedure * proc) override;
+	Opd* flattenAsStmt(Procedure * proc);
 private:
 	IDNode * myID;
 	std::list<ExpNode *> * myArgs;

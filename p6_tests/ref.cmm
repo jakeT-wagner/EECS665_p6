@@ -1,0 +1,6 @@
+int main() {
+    ptr int a;
+    int b;
+
+    a = &b;
+}

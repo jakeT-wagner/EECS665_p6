@@ -1,0 +1,11 @@
+[BEGIN GLOBALS]
+[END GLOBALS]
+[BEGIN main LOCALS]
+a (local var of 8 bytes)
+b (local var of 8 bytes)
+tmp0 (tmp var of 8 bytes)
+[END main LOCALS]
+main:       enter main
+            [tmp0] := b
+            [a] := [tmp0]
+lbl_0:      leave main

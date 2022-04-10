@@ -215,6 +215,9 @@ public:
 		return result;
 	}
 	virtual const FnType * asFn() const override { return this; }
+	virtual bool isVoid() const override { 
+		return myRetType -> asBasic() -> isVoid(); // == BaseType::VOID; 
+	}
 
 	const DataType * getReturnType() const {
 		return myRetType;

@@ -1,0 +1,36 @@
+bool fn_b(bool b) {
+
+}
+
+int fn_i() {
+    return 2 + 2;
+}
+
+short fn_s() {
+    ptr short s;
+    read @s;
+    return @s;
+}
+
+void v(){
+
+}
+
+int main() {
+    int a;
+
+    v();
+
+    fn_i();
+
+    a = fn_i();
+
+    a = fn_i() + a;
+
+    int b; 
+    ptr int p;
+
+    b = fn_s() - 3S * (fn_i() / fn_s()) + @p;
+
+    write a;
+}

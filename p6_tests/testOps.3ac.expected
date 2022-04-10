@@ -1,0 +1,57 @@
+[BEGIN GLOBALS]
+b
+e
+f
+g
+c
+[END GLOBALS]
+[BEGIN fn LOCALS]
+a (formal arg of 8)
+d (local var of 8 bytes)
+q (local var of 8 bytes)
+tmp0 (tmp var of 8 bytes)
+tmp1 (tmp var of 8 bytes)
+tmp2 (tmp var of 8 bytes)
+tmp3 (tmp var of 8 bytes)
+tmp4 (tmp var of 8 bytes)
+tmp5 (tmp var of 8 bytes)
+tmp6 (tmp var of 8 bytes)
+tmp7 (tmp var of 8 bytes)
+tmp8 (tmp var of 8 bytes)
+tmp9 (tmp var of 8 bytes)
+tmp10 (tmp var of 8 bytes)
+tmp11 (tmp var of 8 bytes)
+tmp12 (tmp var of 8 bytes)
+tmp13 (tmp var of 8 bytes)
+[END fn LOCALS]
+fun_fn:     enter fn
+            getarg 1 [a]
+            [tmp0] := 10 ADD64 1
+            [d] := [tmp0]
+            [tmp1] := 12 SUB64 3
+            [a] := [tmp1]
+            [tmp2] := 8 MULT64 4
+            [b] := [tmp2]
+            [tmp3] := 12 DIV64 3
+            [d] := [tmp3]
+            [tmp4] := 6 EQ64 6
+            [e] := [tmp4]
+            [tmp5] := 7 NEQ64 8
+            [f] := [tmp5]
+            [tmp6] := 1 OR64 1
+            [e] := [tmp6]
+            [tmp7] := 0 AND64 0
+            [f] := [tmp7]
+            [tmp8] := 5 LT64 6
+            [e] := [tmp8]
+            [tmp9] := 6 GT64 7
+            [f] := [tmp9]
+            [tmp10] := 5 LTE64 6
+            [e] := [tmp10]
+            [tmp11] := 6 LTE64 7
+            [f] := [tmp11]
+            [tmp12] := NEG64 5
+            [d] := [tmp12]
+            [tmp13] := NOT64 1
+            [e] := [tmp13]
+lbl_0:      leave fn

@@ -1,0 +1,9 @@
+[BEGIN GLOBALS]
+a
+[END GLOBALS]
+[BEGIN main LOCALS]
+[END main LOCALS]
+main:       enter main
+            [a] := [a] ADD64 1
+            [a] := [a] SUB64 1
+lbl_0:      leave main

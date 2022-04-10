@@ -37,6 +37,9 @@ public:
 		if (const BasicType * basic = type->asBasic()){
 			return 8;
 		}
+		else if (type -> isPtr()) {
+			return type -> getSize();
+		}
 		assert(false);
 	}
 private:
@@ -99,10 +102,10 @@ public:
 	AddrOpd(std::string nameIn, size_t width)
 	: Opd(width), name(nameIn) { }
 	virtual std::string valString() override{
-		return "[" + getName() + "]";
+		return "[[" + getName() + "]]";
 	}
 	virtual std::string locString() override{
-		return getName();
+		return "[" + getName() + "]";
 	}
 	virtual std::string getName(){
 		return name;

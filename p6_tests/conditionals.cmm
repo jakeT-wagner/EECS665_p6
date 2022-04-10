@@ -1,0 +1,37 @@
+void while_test() {
+    bool b;
+    while (b) {
+        b = false;
+        while (!b) {
+            b = true;
+        }
+    }
+}
+
+void if_test() {
+    bool b;
+
+    if (b or (true and false)) {
+        b = false;
+        if (!b) {
+            b = true;
+        }
+    }
+}
+
+void if_else_test() {
+    int a;
+    if (a > 3 or a <= 2 * 10) {
+        a = 0;
+    }
+    else {
+        a = 1;
+    }
+}
+
+
+int main() {
+    while_test();
+    if_test();
+    if_else_test();
+}

@@ -1,0 +1,54 @@
+[BEGIN GLOBALS]
+[END GLOBALS]
+[BEGIN main LOCALS]
+a (local var of 8 bytes)
+b (local var of 8 bytes)
+tmp2 (tmp var of 8 bytes)
+tmp3 (tmp var of 8 bytes)
+tmp6 (tmp var of 8 bytes)
+tmp7 (tmp var of 8 bytes)
+tmp11 (tmp var of 8 bytes)
+tmp12 (tmp var of 8 bytes)
+tmp15 (tmp var of 8 bytes)
+tmp16 (tmp var of 8 bytes)
+[addrTmp0] (tmp loc of 8 bytes)
+[addrTmp1] (tmp loc of 8 bytes)
+[addrTmp4] (tmp loc of 8 bytes)
+[addrTmp5] (tmp loc of 8 bytes)
+[addrTmp8] (tmp loc of 8 bytes)
+[addrTmp9] (tmp loc of 8 bytes)
+[addrTmp10] (tmp loc of 8 bytes)
+[addrTmp13] (tmp loc of 8 bytes)
+[addrTmp14] (tmp loc of 8 bytes)
+[addrTmp17] (tmp loc of 8 bytes)
+[addrTmp18] (tmp loc of 8 bytes)
+[END main LOCALS]
+main:       enter main
+            [addrTmp0] := [a]
+            [[addrTmp0]] := 3
+            [addrTmp1] := [b]
+            [[addrTmp1]] := 2
+            [tmp2] := 2
+            [tmp3] := [tmp2] ADD64 2
+            [addrTmp4] := [a]
+            [[addrTmp4]] := [tmp3]
+            [addrTmp5] := [b]
+            [tmp6] := [[addrTmp5]]
+            [tmp7] := [tmp6] ADD64 2
+            [addrTmp8] := [a]
+            [[addrTmp8]] := [tmp7]
+            [addrTmp9] := [b]
+            [addrTmp10] := [b]
+            [tmp11] := [[addrTmp9]] ADD64 [[addrTmp10]]
+            [tmp12] := [tmp11]
+            [addrTmp13] := [a]
+            [[addrTmp13]] := [tmp12]
+            [addrTmp14] := [b]
+            [tmp15] := [[addrTmp14]]
+            [tmp16] := 2 ADD64 [tmp15]
+            [addrTmp17] := [a]
+            [[addrTmp17]] := [tmp16]
+            [addrTmp18] := [a]
+            REPORT [[addrTmp18]]
+lbl_0:      leave main
+

@@ -50,7 +50,7 @@ std::string Procedure::toString(bool verbose){
 			+ " bytes)\n";
 	}
 	for (auto addrOpd : this->addrOpds){
-		res += addrOpd->locString() + " (addr opd of "
+		res += addrOpd->locString() + " (tmp loc of "
 			+ std::to_string(addrOpd->getWidth())
 			+ " bytes)\n";
 	}
@@ -104,7 +104,7 @@ SymOpd * Procedure::getSymOpd(SemSymbol * sym){
 }
 
 AuxOpd * Procedure::makeTmp(size_t width){
-	std::string name = "varTmp";
+	std::string name = "tmp";
 	name += std::to_string(maxTmp++);
 	AuxOpd * res = new AuxOpd(name, width);
 	temps.push_back(res);
