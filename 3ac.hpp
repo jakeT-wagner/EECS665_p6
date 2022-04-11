@@ -115,6 +115,24 @@ private:
 	std::string name;
 };
 
+class StringOpd : public Opd{
+public:
+	StringOpd(std::string nameIn, size_t width)
+	: Opd(width), name(nameIn) { }
+	virtual std::string valString() override{
+		return "[" + getName() + "]";
+	}
+	virtual std::string locString() override{
+		return getName();
+	}
+	virtual std::string getName(){
+		return name;
+	}
+private:
+	std::string val;
+	std::string name;
+};
+
 enum BinOp {
 	ADD64, SUB64, DIV64, MULT64, EQ64, NEQ64, LT64, GT64, LTE64, GTE64, AND64, OR64
 };
@@ -354,7 +372,7 @@ private:
 	size_t max_label = 0;
 	size_t str_idx = 0;
 	std::list<Procedure *> * procs; 
-	HashMap<AddrOpd *, std::string> strings;
+	HashMap<StringOpd *, std::string> strings;
 	std::map<SemSymbol *, SymOpd *> globals;
 };
 

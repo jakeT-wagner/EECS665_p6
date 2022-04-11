@@ -12,14 +12,14 @@ short fn_s() {
     return @s;
 }
 
-void v(){
-
+void v(int a, int b, string c, short d, bool e, ptr string f, string g){
+    return;
 }
 
 int main() {
     int a;
-
-    v();
+    string str;
+    v(1, 3S, "abc", 4S, false, &str, str);
 
     fn_i();
 

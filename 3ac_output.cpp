@@ -94,8 +94,19 @@ Opd * LValNode::flatten(Procedure * proc){
 }
 
 Opd * CallExpNode::flatten(Procedure * proc){
+	std::list<Opd*>* lst = new std::list<Opd*>;
 	for (auto arg : *myArgs) {
-		arg -> flatten(proc);
+		Opd * opd = arg -> flatten(proc);
+		lst -> push_back(opd);
+	}
+
+	size_t i = 1;
+	while (!lst -> empty()) {
+		Opd * opd = lst -> front();
+		lst -> pop_front();
+		SetArgQuad * setArgQuad = new SetArgQuad(i, opd);
+		proc -> addQuad(setArgQuad);
+		i++;
 	}
 
 	CallQuad * quad = new CallQuad(myID -> getSymbol());
@@ -112,8 +123,19 @@ Opd * CallExpNode::flatten(Procedure * proc){
 
 Opd* CallExpNode::flattenAsStmt(Procedure * proc)
 {
+	std::list<Opd*>* lst = new std::list<Opd*>;
 	for (auto arg : *myArgs) {
-		arg -> flatten(proc);
+		Opd * opd = arg -> flatten(proc);
+		lst -> push_back(opd);
+	}
+
+	size_t i = 1;
+	while (!lst -> empty()) {
+		Opd * opd = lst -> front();
+		lst -> pop_front();
+		SetArgQuad * setArgQuad = new SetArgQuad(i, opd);
+		proc -> addQuad(setArgQuad);
+		i++;
 	}
 
 	if (!(getRetType() -> asFn() -> isVoid())) {
@@ -470,10 +492,12 @@ void CallStmtNode::to3AC(Procedure * proc){
 }
 
 void ReturnStmtNode::to3AC(Procedure * proc){
-	Opd * src = myExp -> flatten(proc);
-	SetRetQuad * srQuad = new SetRetQuad(src);
+	if (myExp != nullptr) {
+		Opd * src = myExp -> flatten(proc);
+		SetRetQuad * srQuad = new SetRetQuad(src);
+		proc -> addQuad(srQuad);
+	}
 	GotoQuad * gotoQuad = new GotoQuad(proc -> getLeaveLabel());
-	proc -> addQuad(srQuad);
 	proc -> addQuad(gotoQuad);
 }
 

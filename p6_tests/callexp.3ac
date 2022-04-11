@@ -1,4 +1,5 @@
 [BEGIN GLOBALS]
+str_0 "abc"
 [END GLOBALS]
 [BEGIN fn_b LOCALS]
 b (formal arg of 8)
@@ -27,11 +28,27 @@ fun_fn_s:   enter fn_s
             goto lbl_2
 lbl_2:      leave fn_s
 [BEGIN v LOCALS]
+a (formal arg of 8)
+b (formal arg of 8)
+c (formal arg of 8)
+d (formal arg of 8)
+e (formal arg of 8)
+f (formal arg of 8)
+g (formal arg of 8)
 [END v LOCALS]
 fun_v:      enter v
+            getarg 1 [a]
+            getarg 2 [b]
+            getarg 3 [c]
+            getarg 4 [d]
+            getarg 5 [e]
+            getarg 6 [f]
+            getarg 7 [g]
+            goto lbl_3
 lbl_3:      leave v
 [BEGIN main LOCALS]
 a (local var of 8 bytes)
+str (local var of 8 bytes)
 b (local var of 8 bytes)
 p (local var of 8 bytes)
 tmp0 (tmp var of 8 bytes)
@@ -47,34 +64,45 @@ tmp9 (tmp var of 8 bytes)
 tmp10 (tmp var of 8 bytes)
 tmp11 (tmp var of 8 bytes)
 tmp12 (tmp var of 8 bytes)
+tmp13 (tmp var of 8 bytes)
 tmp14 (tmp var of 8 bytes)
-[addrTmp13] (tmp loc of 8 bytes)
+tmp16 (tmp var of 8 bytes)
+[addrTmp15] (tmp loc of 8 bytes)
 [END main LOCALS]
 main:       enter main
+            [tmp0] := 3
+            [tmp1] := str
+            setarg 1 1
+            setarg 2 [tmp0]
+            setarg 3 [str_0]
+            setarg 4 4
+            setarg 5 0
+            setarg 6 [tmp1]
+            setarg 7 [str]
             call v
             call fn_i
             call fn_i
-            getret [tmp1]
-            [a] := [tmp1]
-            call fn_i
-            getret [tmp2]
-            [tmp3] := [tmp2] ADD64 [a]
+            getret [tmp3]
             [a] := [tmp3]
-            call fn_s
-            getret [tmp4]
-            [tmp5] := [tmp4]
-            [tmp6] := 3
             call fn_i
-            getret [tmp7]
+            getret [tmp4]
+            [tmp5] := [tmp4] ADD64 [a]
+            [a] := [tmp5]
             call fn_s
-            getret [tmp8]
-            [tmp9] := [tmp8]
-            [tmp10] := [tmp7] DIV64 [tmp9]
-            [tmp11] := [tmp6] MULT64 [tmp10]
-            [tmp12] := [tmp5] SUB64 [tmp11]
-            [addrTmp13] := [p]
-            [tmp14] := [tmp12] ADD64 [[addrTmp13]]
-            [b] := [tmp14]
+            getret [tmp6]
+            [tmp7] := [tmp6]
+            [tmp8] := 3
+            call fn_i
+            getret [tmp9]
+            call fn_s
+            getret [tmp10]
+            [tmp11] := [tmp10]
+            [tmp12] := [tmp9] DIV64 [tmp11]
+            [tmp13] := [tmp8] MULT64 [tmp12]
+            [tmp14] := [tmp7] SUB64 [tmp13]
+            [addrTmp15] := [p]
+            [tmp16] := [tmp14] ADD64 [[addrTmp15]]
+            [b] := [tmp16]
             REPORT [a]
 lbl_4:      leave main
 

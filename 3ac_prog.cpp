@@ -42,7 +42,7 @@ void IRProgram::gatherGlobal(SemSymbol * sym){
 
 Opd * IRProgram::makeString(std::string val){
 	std::string name = "str_" + std::to_string(str_idx++);
-	AddrOpd * opd = new AddrOpd(name, 1);
+	StringOpd * opd = new StringOpd(name, 1);
 	strings[opd] = val;
 	return opd;
 }

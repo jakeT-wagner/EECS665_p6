@@ -1,0 +1,37 @@
+[BEGIN GLOBALS]
+[END GLOBALS]
+[BEGIN callee LOCALS]
+arg (formal arg of 8)
+tmp0 (tmp var of 8 bytes)
+tmp1 (tmp var of 8 bytes)
+tmp2 (tmp var of 8 bytes)
+tmp3 (tmp var of 8 bytes)
+tmp4 (tmp var of 8 bytes)
+[END callee LOCALS]
+fun_callee: enter callee
+            getarg 1 [arg]
+lbl_1:      nop
+            [tmp0] := [arg] GT64 3
+            IFZ [tmp0] GOTO lbl_2
+            [tmp1] := 1 MULT64 2
+            [tmp2] := [arg] SUB64 [tmp1]
+            [arg] := [tmp2]
+            [tmp3] := [arg] EQ64 2
+            IFZ [tmp3] GOTO lbl_3
+            setret 7
+            goto lbl_0
+lbl_3:      nop
+            goto lbl_1
+lbl_2:      nop
+            [tmp4] := [arg] MULT64 2
+            setret [tmp4]
+            goto lbl_0
+lbl_0:      leave callee
+[BEGIN main LOCALS]
+tmp0 (tmp var of 8 bytes)
+[END main LOCALS]
+main:       enter main
+            setarg 1 1
+            call callee
+lbl_4:      leave main
+

@@ -1,0 +1,13 @@
+int callee(int arg) {
+    while (arg > 3) {
+        arg = arg - 1 * 2;
+        if (arg == 2) {
+            return 7;
+        }
+    }
+    return arg * 2;
+}
+
+int main() {
+    callee(1);
+}
